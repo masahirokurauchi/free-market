@@ -38,13 +38,13 @@
           ブランドから探す
     .header-bottom-right
       -# ログイン済みだったら
-      - if false
+      - if user_signed_in?  
         .header-bottom-right__button
           = link_to "" do
             = icon "fas", "heart", class:"header-bottom-right__button--gray"
             いいね!一覧
         .header-bottom-right__button
-          = link_to "" do
+          = link_to destroy_user_session_path, method: :delete do
             = icon "fas", "bell", class:"header-bottom-right__button--gray"
             お知らせ
         .header-bottom-right__button
@@ -52,7 +52,7 @@
             = icon "fas", "check", class:"header-bottom-right__button--gray"
             やることリスト
         .header-bottom-right__button
-          = link_to root_path do
+          = link_to user_path(current_user) do
             = image_tag 'user_noimage.png', class:"header-bottom-right__mypage"
             マイページ
       - else
