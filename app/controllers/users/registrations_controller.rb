@@ -12,9 +12,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    build_resource(sign_up_params)
-    @user.save! unless @user.valid?
-    super
+    # build_resource(sign_up_params)
+    # @user.save! unless @user.valid?
+    # super
   end
 
   # GET /resource/edit
@@ -51,6 +51,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def completed
+  end
+
+  private
+
+  def after_sign_up_path_for(resource)
+    user_path(resource)
   end
 
   # protected
