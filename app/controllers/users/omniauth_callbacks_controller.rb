@@ -11,10 +11,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   	if @user.persisted?
       ## @userが登録済み
       sns_credential.update(user_id: @user.id)
-      
+
       sign_in_and_redirect @user, event: :authentication
     else
       ## @userが未登録
+      @sns_auth = true
       render layout: 'no_menu', template: 'devise/registrations/new'
     end
   end

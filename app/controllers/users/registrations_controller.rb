@@ -12,11 +12,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   build_resource(sign_up_params)
-  #   @user.save! unless @user.valid?
-  #   super
-  # end
+  def create
+    if params[:user][:sns_auth]
+    ## SNS認証でユーザー登録をしようとしている場合
+    ## パスワードが未入力なのでランダムで生成する
+    password = Devise.friendly_token[8,12] + "1a"
+    ## 生成したパスワードをparamsに入れる
+    params[:user][:password] = password
+    params[:user][:password_confirmation] = password
+    end
+  
+    super
+  end
 
   # GET /resource/edit
   # def edit
