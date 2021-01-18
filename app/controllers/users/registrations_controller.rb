@@ -7,9 +7,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   layout 'no_menu'
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    if session["devise.sns_auth"]
+      ## session["devise.sns_auth"]がある＝sns認証
+      build_resource(session["devise.sns_auth"][:user])
+    else
+      ## session["devise.sns_auth"]がない=sns認証ではない
+      super
+    end
+  end
 
   # POST /resource
   def create
