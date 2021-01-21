@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   #Association 
   has_one :sns_credential, dependent: :destroy
+  has_one :address, dependent: :destroy
 
   #Validation
   validates :nickname, :birthday, :first_name, :last_name, presence: true
