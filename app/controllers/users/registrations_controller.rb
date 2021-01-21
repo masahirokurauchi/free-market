@@ -8,6 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
+    @progress = 1
     if session["devise.sns_auth"]
       ## session["devise.sns_auth"]がある＝sns認証
       build_resource(session["devise.sns_auth"]["user"])
@@ -77,18 +78,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def confirm_phone
+    @progress = 2
   end
 
   def new_address
+    @progress = 3
   end
 
   def completed
+    @progress = 5
   end
 
   private
 
   def after_sign_up_path_for(resource)
-    user_path(resource)
+    users_confirm_phone_path
   end
 
   def check_recaptcha
