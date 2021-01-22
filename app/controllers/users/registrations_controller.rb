@@ -83,6 +83,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def new_address
     @progress = 3
+
+    @address = Address.new
+  end
+
+  def create_address
+    @address = Address.new(address_params)
+    @progress = 5
+    unless @address.save!
+      redirect_to users_new_address_path, alert: @address.errors.full_messages
+    end
   end
 
   def completed
@@ -97,6 +107,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def check_recaptcha
     redirect_to new_user_registration_path unless verify_recaptcha(message: "reCAPTCHAを承認してください")
+  end
+
+  private
+
+  def address_params
+    params.require(:address).permit(:postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number).merge(user_id: current_user.id)
   end
 
   # protected
