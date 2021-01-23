@@ -4,6 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   prepend_before_action :check_recaptcha, only: [:create]
+  before_action :authenticate_scope!, only: [:confirm_phone, :new_address, :create_address]
   layout 'no_menu'
 
   # GET /resource/sign_up
@@ -90,7 +91,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create_address
     @address = Address.new(address_params)
     @progress = 5
-    unless @address.save!
+    unless @address.save
       redirect_to users_new_address_path, alert: @address.errors.full_messages
     end
   end
@@ -98,6 +99,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def completed
     @progress = 5
   end
+
+
+
 
   private
 
@@ -108,8 +112,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def check_recaptcha
     redirect_to new_user_registration_path unless verify_recaptcha(message: "reCAPTCHAを承認してください")
   end
-
-  private
 
   def address_params
     params.require(:address).permit(:postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number).merge(user_id: current_user.id)
