@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   prepend_before_action :check_recaptcha, only: [:create]
-  before_action :authenticate_scope!, only: [:confirm_phone, :new_address, :create_address]
+  before_action :session_has_not_user, only: [:confirm_phone, :new_address, :create_address]
   layout 'no_menu'
 
   # GET /resource/sign_up
@@ -36,16 +36,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
     ## @user = User.new(user_params)のイメージ
     build_resource(sign_up_params)
 
-    ## ↓resource（@user）にsns_credentialを紐付けている
-    resource.build_sns_credential(session["devise.sns_auth"]["sns_credential"]) if session["devise.sns_auth"]
-
-    if resource.save  ## @user.save をしているイメージ
-      set_flash_message! :notice, :signed_up  ## フラッシュメッセージのセット
-      sign_up(resource_name, resource)  ## 新規登録＆ログイン
-      respond_with resource, location: after_sign_up_path_for(resource)  ## リダイレクト
-    else
-      redirect_to new_user_registration_path, alert: @user.errors.full_messages
+    ##バリデーションチェック
+    unless resource.valid?
+      @progress = 1
+      @sns_auth = true if session["devise.sns_auth"]
+      flash.now[:alert] = resource.errors.full_messages
+      render :new and return
     end
+
+    session["devise.user_object"] = @user ##sessionに値を入れる
+    respond_with resource, location: after_sign_up_path_for(resource)  ## リダイレクト
+
+    # ## ↓resource（@user）にsns_credentialを紐付けている
+    # resource.build_sns_credential(session["devise.sns_auth"]["sns_credential"]) if session["devise.sns_auth"]
+
+    # if resource.save  ## @user.save をしているイメージ
+    #   set_flash_message! :notice, :signed_up  ## フラッシュメッセージのセット
+    #   sign_up(resource_name, resource)  ## 新規登録＆ログイン
+    #   respond_with resource, location: after_sign_up_path_for(resource)  ## リダイレクト
+    # else
+    #   redirect_to new_user_registration_path, alert: @user.errors.full_messages
+    # end
 
   end
 
@@ -91,9 +102,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create_address
     @address = Address.new(address_params)
     @progress = 5
-    unless @address.save
+
+    unless @address.valid?
+      @progress = 3
       redirect_to users_new_address_path, alert: @address.errors.full_messages
     end
+
+    @progress = 5
+　　　##User.newのイメージ
+    @user = build_resource(session["devise.user_object"])
+    @user.build_sns_credential(session["devise.sns_auth"]["sns_credential"]) if session["devise.sns_auth"] ##sns認証でここまできたとき
+    @user.address = @address
+    
+    session["devise.user_object"].save
+    set_flash_message! :notice, :signed_up  ## フラッシュメッセージのセット
+    sign_up(resource_name, resource)  ## 新規登録＆ログイン
+
+    # unless @address.save
+    #   redirect_to users_new_address_path, alert: @address.errors.full_messages
+    # end
   end
 
   def completed
@@ -114,7 +141,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def address_params
-    params.require(:address).permit(:postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number).merge(user_id: current_user.id)
+    params.require(:address).permit(:postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number)
+  end
+
+  def session_has_not_user
+    redirect_to new_user_registration_path, alert: "会員情報を入力してください。" unless session["devise.user_object"].present?
   end
 
   # protected
