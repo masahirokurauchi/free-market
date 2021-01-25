@@ -44,7 +44,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render :new and return
     end
 
-    session["devise.user_object"] = @user ##sessionに値を入れる
+    session["devise.user_object"] = @user.attributes  ##sessionにハッシュ形式で値を入れる
+    session["devise.user_object"][:password] = params[:user][:password]  ## 暗号化前のパスワードをsessionに入れる
     respond_with resource, location: after_sign_up_path_for(resource)  ## リダイレクト
 
     # ## ↓resource（@user）にsns_credentialを紐付けている
@@ -91,6 +92,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def confirm_phone
     @progress = 2
+    binding.pry
   end
 
   def new_address
@@ -109,14 +111,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
 
     @progress = 5
-　　　##User.newのイメージ
+    ## User.newのイメージ
     @user = build_resource(session["devise.user_object"])
     @user.build_sns_credential(session["devise.sns_auth"]["sns_credential"]) if session["devise.sns_auth"] ##sns認証でここまできたとき
     @user.address = @address
-    
-    session["devise.user_object"].save
-    set_flash_message! :notice, :signed_up  ## フラッシュメッセージのセット
-    sign_up(resource_name, resource)  ## 新規登録＆ログイン
+
+    if @user.save
+      sign_up(resource_name, resource)  ## ログインさせる
+    else
+      redirect_to root_path, alert: @user.errors.full_messages
+    end
 
     # unless @address.save
     #   redirect_to users_new_address_path, alert: @address.errors.full_messages
