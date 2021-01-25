@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: "items#index"
+
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions',
@@ -10,7 +11,7 @@ Rails.application.routes.draw do
     get 'users/select' => 'users/registrations#select'
     get 'users/confirm_phone' => 'users/registrations#confirm_phone'
     get 'users/new_address' => 'users/registrations#new_address'
-    get 'users/create_address' => 'users/registrations#create_address'
+    post 'users/create_address' => 'users/registrations#create_address'
   end
 
   resources :users, only: [:show]
