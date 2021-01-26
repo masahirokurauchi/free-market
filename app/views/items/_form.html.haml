@@ -29,19 +29,19 @@
   .block.horizontal-padding-5
     .input-field
       .input-field-main
-        = f.label :hoge, "商品名"
+        = f.label :name, "商品名"
         %span.required-true
           必須
         %br
-        = f.text_field :hoge, required: true, placeholder: "PC・携帯どちらも可"
+        = f.text_field :name, required: true, placeholder: "PC・携帯どちらも可"
         .error-field{data:{column_name: "name"}}
     .input-field
       .input-field-main
-        = f.label :hoge, "商品の説明"
+        = f.label :detail, "商品の説明"
         %span.required-true
           必須
         %br
-        = f.text_area :hoge, required: true, placeholder: "6文字以上", rows: 5
+        = f.text_area :detail, required: true, placeholder: "6文字以上", rows: 5
         .error-field{data:{column_name: "detail"}}
   .block.horizontal-padding-5
     .input-field
@@ -102,11 +102,11 @@
       .input-field-main
         .input-field-main-price
           .input-field-main-price__left
-            = f.label :hoge, "価格"
+            = f.label :price, "価格"
             %span.required-true
               必須
           .input-field-main-price__right
-            = f.text_field :hoge, required: true, placeholder: "価格"
+            = f.text_field :price, required: true, placeholder: "価格"
             .error-field{data:{column_name: "price"}}
         %hr
         .input-field-main-price
