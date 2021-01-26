@@ -8,6 +8,8 @@ class User < ApplicationRecord
   #Association 
   has_one :sns_credential, dependent: :destroy
   has_one :address, dependent: :destroy
+  has_many :selling_items, class_name: "Item", foreign_key: "seller_id"
+  has_many :bought_items, class_name: "Item", foreign_key: "buyer_id"
 
   #Validation
   validates :nickname, :birthday, :first_name, :last_name, presence: true
