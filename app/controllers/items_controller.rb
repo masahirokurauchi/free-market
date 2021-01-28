@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only:[:new]
-  before_action :set_item, only:[:edit, :update]
+  before_action :set_item, only:[:edit, :update, :destroy]
 
   def new
   	@item = Item.new
@@ -23,6 +23,14 @@ class ItemsController < ApplicationController
   def update
   	if @item.update(item_params)
   		redirect_to root_path, notice: "商品の編集が完了しました。"
+  	else
+  		render layout: 'no_menu', action: :edit
+  	end
+  end
+
+  def destroy
+  	if @item.destroy
+  		redirect_to root_path, notice: "商品の削除が完了しました。"
   	else
   		render layout: 'no_menu', action: :edit
   	end
