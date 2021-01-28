@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only:[:new]
+  before_action :authenticate_user!
   before_action :set_item, only:[:edit, :update, :destroy]
+  before_action :seller?, only:[:edit, :update, :destroy]
 
   def new
   	@item = Item.new
@@ -48,5 +49,9 @@ class ItemsController < ApplicationController
 
   def set_item
   	@item = Item.find(params[:id])
+  end
+
+  def seller?
+  	redirect_to root_path, notice: "あなたは出品者ではありません。" unless current_user.id == @item.seller_id
   end
 end
