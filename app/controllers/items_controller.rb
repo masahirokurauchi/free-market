@@ -5,15 +5,18 @@ class ItemsController < ApplicationController
 
   def new
   	@item = Item.new
-    render layout: 'no_menu' # レイアウトファイルを指定
+    3.times do
+      @item.images.build
+    end
+    render layout: 'no_menu'
   end
 
   def create
   	@item = Item.new(item_params)
-  	if @item.save!
+  	if @item.save
       redirect_to root_path, notice: "出品に成功しました"
     else
-      render layout: 'no_menu', template: 'items/new' # レイアウトファイル指定
+      redirect_to new_item_path, alert: @item.errors.full_messages
     end
   end
 
@@ -25,7 +28,7 @@ class ItemsController < ApplicationController
   	if @item.update(item_params)
   		redirect_to root_path, notice: "商品の編集が完了しました。"
   	else
-  		render layout: 'no_menu', action: :edit
+  		redirect_to edit_item_path(@item), alert: @item.errors.full_messages
   	end
   end
 
@@ -44,7 +47,7 @@ class ItemsController < ApplicationController
 
   private
   def item_params
-  	params.require(:item).permit(:name, :detail, :category_id, :condition, :delivery_fee_payer, :delivery_method, :prefecture_id, :delivery_days, :price).merge(seller_id: current_user.id)
+  	params.require(:item).permit(:name, :detail, :category_id, :condition, :delivery_fee_payer, :delivery_method, :prefecture_id, :delivery_days, :price, images_attributes: [:src, :id, :_destroy]).merge(seller_id: current_user.id)
   end
 
   def set_item
