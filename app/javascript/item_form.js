@@ -9,8 +9,8 @@ document.addEventListener('turbolinks:load', function () {
   });
 
   // //file_fieldが変化したら
-  $("#image-file-fields").on("change", `input[type="file"]`, function () { //新しく画像が選択された、もしくは変更しようとしたが何も選択しなかった時
-    // -----変更ここまで-----
+  $("#image-file-fields").on("change", `input[type="file"]`, function (e) { //新しく画像が選択された、もしくは変更しようとしたが何も選択しなかった時
+    console.table(e.target.files);
     console.log("画像が選択されました")
   });
   
