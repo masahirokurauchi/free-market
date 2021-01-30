@@ -50,5 +50,12 @@ document.addEventListener('turbolinks:load', function () {
     const file_field_html = newFileField(index);
     $("#image-file-fields").append(file_field_html);//新しいfile_fieldをappendする
   });
+
+
+  //削除ボタンを押したら
+  $("#selected-item-images").on("click", ".item-image__buttons--delete",function() {//javascriptによって後から追加されるものにも対応できるようにした
+  	console.log("削除ボタンが押されました");
+  });
+
   
 });
