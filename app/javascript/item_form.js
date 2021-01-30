@@ -11,12 +11,12 @@ document.addEventListener('turbolinks:load', function () {
   // //file_fieldが変化したら
   $("#image-file-fields").on("change", `input[type="file"]`, function (e) { //新しく画像が選択された、もしくは変更しようとしたが何も選択しなかった時
     console.table(e.target.files);
-    console.log("画像が選択されました")
+    
     const file = e.target.files[0];
     const blob_url = window.URL.createObjectURL(file); //選択された画像をblob url形式に変換する。
-    console.log(blob_url);
+    
     const preview_html = `<img src="${blob_url}" width="20%">`; //プレビュー用HTML作成
-    $("#select-image-button").before(preview_html);
+    $("#select-image-button").before(preview_html); //灰色の箱の直前にアペンド
   });
   
 });
