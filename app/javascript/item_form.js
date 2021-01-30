@@ -8,6 +8,23 @@ document.addEventListener('turbolinks:load', function () {
     return html;
   }
 
+  function buildImagePreview(blob_url, index) { //選択した画像ファイルのプレビューを表示する。
+    html = `
+            <div class="item-image new" data-index=${index}>
+              <img src =${blob_url} class="item-image__image">
+              <div class="item-image__buttons">
+                <div class="item-image__buttons--edit">
+                編集
+                </div>
+                <div class="item-image__buttons--delete">
+                削除
+                </div>
+              </div>
+            </div>
+            `;
+    return html;
+  }
+
   //灰色の箱をクリックしたら
   $("#select-image-button").on("click", function(){
   	const file_field = $(".new-item-image:last");// 新規画像投稿用のfile_fieldの一番最後のものを取得する。
@@ -26,7 +43,7 @@ document.addEventListener('turbolinks:load', function () {
 
     const blob_url = window.URL.createObjectURL(file); //選択された画像をblob url形式に変換する。
     
-    const preview_html = `<img src="${blob_url}" width="20%">`; //プレビュー用HTML作成
+    const preview_html = buildImagePreview(blob_url, index);//プレビュー用HTML作成する関数を呼び出す
     $("#select-image-button").before(preview_html); //灰色の箱の直前にappendする
 
     index += 1;//カスタムデータ属性をインクリメント
