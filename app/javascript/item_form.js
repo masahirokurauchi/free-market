@@ -10,7 +10,7 @@ document.addEventListener('turbolinks:load', function () {
 
   //灰色の箱をクリックしたら
   $("#select-image-button").on("click", function(){
-  	const file_field = $("#item_images_attributes_0_src"); // 新規画像投稿用のfile_fieldを取得する。
+  	const file_field = $(".new-item-image:last");// 新規画像投稿用のfile_fieldの一番最後のものを取得する。
     file_field.trigger("click"); // file_fieldをクリックさせる。
 
   });
@@ -30,7 +30,6 @@ document.addEventListener('turbolinks:load', function () {
     $("#select-image-button").before(preview_html); //灰色の箱の直前にappendする
 
     index += 1;//カスタムデータ属性をインクリメント
-    console.log(index);
     const file_field_html = newFileField(index);
     $("#image-file-fields").append(file_field_html);//新しいfile_fieldをappendする
   });
