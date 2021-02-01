@@ -53,8 +53,9 @@ document.addEventListener('turbolinks:load', function () {
 
 
   //削除ボタンを押したら
-  $("#selected-item-images").on("click", ".item-image__buttons--delete",function() {//javascriptによって後から追加されるものにも対応できるようにした
-  	console.log("削除ボタンが押されました");
+  $("#selected-item-images").on("click", ".item-image__buttons--delete",function(e) {//javascriptによって後から追加されるものにも対応できるようにした
+  	const index = $(this).parents(".item-image").data("index");
+    console.log(index, "番目の画像を削除します")
   });
 
   
