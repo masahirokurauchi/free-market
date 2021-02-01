@@ -42,6 +42,11 @@ document.addEventListener('turbolinks:load', function () {
     console.log("選択した画像のindex=", index);
 
     const blob_url = window.URL.createObjectURL(file); //選択された画像をblob url形式に変換する。
+
+    if ($(`.item-image[data-index="${index}"]`)[0]) { //プレビュー画像が既に表示されている、つまり画像の変更をしたい場合
+      console.log("画像の変更を行います");
+      return false; //処理を中断し、編集ボタンを経由した際はプレビュー画像とfile_fieldの追加を行わないようにする
+    }
     
     const preview_html = buildImagePreview(blob_url, index);//プレビュー用HTML作成する関数を呼び出す
     $("#select-image-button").before(preview_html); //灰色の箱の直前にappendする
