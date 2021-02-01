@@ -54,8 +54,9 @@ document.addEventListener('turbolinks:load', function () {
 
   //削除ボタンを押したら
   $("#selected-item-images").on("click", ".item-image__buttons--delete",function(e) {//javascriptによって後から追加されるものにも対応できるようにした
-  	const index = $(this).parents(".item-image").data("index");
-    console.log(index, "番目の画像を削除します")
+  	const index = $(this).parents(".item-image").data("index"); //選択した画像のindexを取得
+  	$(this).parents(".item-image").remove(); //プレビュー画像を削除
+  	$(`#item_images_attributes_${index}__destroy`).prop("checked", true); //削除用チェックボックスにチェック
   });
 
   
