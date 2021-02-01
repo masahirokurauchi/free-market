@@ -62,7 +62,8 @@ document.addEventListener('turbolinks:load', function () {
 
   //編集ボタンを押したら
   $("#selected-item-images").on("click", ".item-image__buttons--edit", function(e) {
-  	const index = $(this).parents(".item-image").data("index");
+  	const index = $(this).parents(".item-image").data("index"); //選択肢た画像のindexを取得
+  	$(`#item_images_attributes_${index}_src`).trigger("click"); //file_fieldをクリック
   	console.log(index, "編集ボタンを押しましたね？");
   });
 
