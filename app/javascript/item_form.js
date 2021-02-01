@@ -57,6 +57,7 @@ document.addEventListener('turbolinks:load', function () {
   	const index = $(this).parents(".item-image").data("index"); //選択した画像のindexを取得
   	$(this).parents(".item-image").remove(); //プレビュー画像を削除
   	$(`#item_images_attributes_${index}__destroy`).prop("checked", true); //削除用チェックボックスにチェック
+  	$(`#item_images_attributes_${index}_src`).remove(); //file_fieldを削除
   });
 
   
