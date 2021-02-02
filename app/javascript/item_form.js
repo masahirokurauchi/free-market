@@ -45,6 +45,8 @@ document.addEventListener('turbolinks:load', function () {
 
     if ($(`.item-image[data-index="${index}"]`)[0]) { //プレビュー画像が既に表示されている、つまり画像の変更をしたい場合
       console.log("画像の変更を行います");
+      const preview_image = $(`.item-image[data-index="${index}"]`).children("img"); //プレビュー画像のimg要素を取得
+      preview_image.attr("src", blob_url);
       return false; //処理を中断し、編集ボタンを経由した際はプレビュー画像とfile_fieldの追加を行わないようにする
     }
     
