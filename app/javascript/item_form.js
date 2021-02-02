@@ -37,9 +37,14 @@ document.addEventListener('turbolinks:load', function () {
     console.table(e.target.files);//画像の情報をテーブル形式で表示
 
     const file = e.target.files[0];//fileを取得
-
     let index = $(this).data("index");//カスタムデータ属性を取得
-    console.log("選択した画像のindex=", index);
+    
+    if (!file) { //編集しようとしたが、何も選択しなかった時。キャンセルを押すとfile_fieldの中身が消えてしまうのでプレビュー画像も同時に消す。
+      console.log("何も選択しませんでした");
+      const delete_button = $(`.item-image[data-index="${index}"]`).find(".item-image__buttons--delete"); //削除ボタンを取得
+      delete_button.trigger("click"); //削除ボタンを押し、プレビュー画像を消去。
+      return false; //プレビュー画像を表示させないようにしている
+    }
 
     const blob_url = window.URL.createObjectURL(file); //選択された画像をblob url形式に変換する。
 
