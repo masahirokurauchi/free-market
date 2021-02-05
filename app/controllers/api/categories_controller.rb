@@ -1,7 +1,8 @@
 class Api::CategoriesController < ApplicationController
 
   def index
-  	binding.pry
+  	category = Category.find(params[:category_id])
+    @categories = category.children
   end
 
 end
