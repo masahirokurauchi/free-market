@@ -18,6 +18,7 @@ document.addEventListener('turbolinks:load', function () {
     return html;
   }
 
+
   $(".input-field-main").on("change", ".select-category", function () { //カテゴリが選択された時
     const category_id = $(this).val();
     console.log("選択されたカテゴリのID:", category_id);
@@ -32,6 +33,7 @@ document.addEventListener('turbolinks:load', function () {
         console.log("success")
         console.table(categories);
         const html = buildCategoryForm(categories);
+        $(".select-category:last").after(html);
         console.log(html);
       })
       .fail(function () {
