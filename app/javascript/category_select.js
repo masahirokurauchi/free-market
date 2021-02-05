@@ -30,11 +30,10 @@ document.addEventListener('turbolinks:load', function () {
         },
         dataType: 'json',
       }).done(function (categories) {
-        console.log("success")
-        console.table(categories);
+      	if (categories.length == 0) return false //categoryが空、つまり孫が選択された場合、処理を終了させる。
+
         const html = buildCategoryForm(categories);
         $(".select-category:last").after(html);
-        console.log(html);
       })
       .fail(function () {
         alert('error');
