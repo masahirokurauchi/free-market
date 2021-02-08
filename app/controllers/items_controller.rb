@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_item, only:[:edit, :update, :destroy]
+  before_action :set_item, only:[:edit, :update, :destroy, :show]
   before_action :seller?, only:[:edit, :update, :destroy]
 
   def index
@@ -12,6 +12,9 @@ class ItemsController < ApplicationController
     @sorted_items = @sorted_items.reject(&:blank?) ## 商品数がゼロのカテゴリを削除する
     @category_ranking = @sorted_items.map{|items| items[0].category.root} ## 商品数が多いカテゴリのランキングを定義
   	
+  end
+
+  def show
   end
 
   def new
