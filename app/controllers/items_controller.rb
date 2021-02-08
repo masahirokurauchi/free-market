@@ -3,6 +3,10 @@ class ItemsController < ApplicationController
   before_action :set_item, only:[:edit, :update, :destroy]
   before_action :seller?, only:[:edit, :update, :destroy]
 
+  def index
+  	
+  end
+
   def new
   	@item = Item.new
     @item.images.build
