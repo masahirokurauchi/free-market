@@ -4,19 +4,13 @@ class ItemsController < ApplicationController
   before_action :seller?, only:[:edit, :update, :destroy]
 
   def index
-  	ladies_category = Category.find_by(name: "レディース")
-    mens_category = Category.find_by(name: "メンズ")
-    kids_category = Category.find_by(name: "ベビー・キッズ")
-
-    ladies_items = Item.search_by_categories(ladies_category.subtree).new_items
-    mens_items = Item.search_by_categories(mens_category.subtree).new_items
-    kids_items = Item.search_by_categories(kids_category.subtree).new_items
-
-    @new_items_arrays = [
-       {category: ladies_category, items: ladies_items},
-       {category: mens_category, items: mens_items},
-       {category: kids_category, items: kids_items}
-    ]
+  	return false if Item.count == 0 ## 商品数がゼロのときはランキングが作れないのでここで終了
+    categories = Category.roots ## 親カテゴリたちを配列で取得
+    items = categories.map{|root| Item.search_by_categories(root.subtree_ids)} ## カテゴリごとの商品リストを取得
+    @sorted_items = items.sort { |a,b| b.length <=> a.length} ## カテゴリごとの商品リストを商品数が多い順で並び替える
+    @sorted_items = @sorted_items[0..3].map{|items| items.order("created_at DESC").limit(4)} ## 商品数が多いカテゴリ上位4つのみ表示したい。また、1つのカテゴリのうち新着商品は4つだけ表示する。
+    @sorted_items = @sorted_items.reject(&:blank?) ## 商品数がゼロのカテゴリを削除する
+    @category_ranking = @sorted_items.map{|items| items[0].category.root} ## 商品数が多いカテゴリのランキングを定義
   	
   end
 
