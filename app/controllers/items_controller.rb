@@ -7,10 +7,10 @@ class ItemsController < ApplicationController
   	@ladies_category = Category.find_by(name: "レディース")
     @mens_category = Category.find_by(name: "メンズ")
     @kids_category = Category.find_by(name: "ベビー・キッズ")
-    
-    @ladies_items = Item.where(category: @ladies_category.subtree).order("created_at DESC").limit(4)
-    @mens_items = Item.where(category: @mens_category.subtree).order("created_at DESC").limit(4)
-    @kids_items = Item.where(category: @kids_category.subtree).order("created_at DESC").limit(4)
+
+    @ladies_items = Item.search_by_categories(@ladies_category.subtree).new_items
+    @mens_items = Item.search_by_categories(@mens_category.subtree).new_items
+    @kids_items = Item.search_by_categories(@kids_category.subtree).new_items
   	
   end
 
