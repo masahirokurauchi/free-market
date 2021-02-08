@@ -4,6 +4,13 @@ class ItemsController < ApplicationController
   before_action :seller?, only:[:edit, :update, :destroy]
 
   def index
+  	@ladies_category = Category.find_by(name: "レディース")
+    @mens_category = Category.find_by(name: "メンズ")
+    @kids_category = Category.find_by(name: "ベビー・キッズ")
+    
+    @ladies_items = Item.where(category: @ladies_category.subtree)
+    @mens_items = Item.where(category: @mens_category.subtree)
+    @kids_items = Item.where(category: @kids_category.subtree)
   	
   end
 
