@@ -8,9 +8,9 @@ class ItemsController < ApplicationController
     @mens_category = Category.find_by(name: "メンズ")
     @kids_category = Category.find_by(name: "ベビー・キッズ")
     
-    @ladies_items = Item.where(category: @ladies_category.subtree)
-    @mens_items = Item.where(category: @mens_category.subtree)
-    @kids_items = Item.where(category: @kids_category.subtree)
+    @ladies_items = Item.where(category: @ladies_category.subtree).order("created_at DESC").limit(4)
+    @mens_items = Item.where(category: @mens_category.subtree).order("created_at DESC").limit(4)
+    @kids_items = Item.where(category: @kids_category.subtree).order("created_at DESC").limit(4)
   	
   end
 
