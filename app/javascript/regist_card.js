@@ -13,8 +13,20 @@ document.addEventListener('turbolinks:load', function () {
           number: $("#card_number_form").val(),
           cvc: $("#cvc_form").val(),
           exp_month: $("#exp_month_form").val(),
-          exp_year: $("#exp_year_form").val()
+          exp_year: Number($("#exp_year_form").val()) + 2000 //4桁である必要があるため
       };
-    　console.log(card);
+    　
+    Payjp.createToken(card, (status, response) => { //cardをpayjpに送信して登録する。
+      
+        if (status === 200) { //成功した場合
+          alert("カードを登録しました");
+          console.log(response.id);
+        } else { //失敗した場合
+          alert("カード情報が正しくありません。");
+          console.log(response.error.message);
+          regist_button.prop('disabled', false);
+        }
+
+      });
     }); 
 });
