@@ -8,6 +8,13 @@ document.addEventListener('turbolinks:load', function () {
   //登録ボタンを押したとき
   regist_button.on("click", function (e) { //登録ボタンを押したとき（ここはsubmitではなくclickにしておく）。
       e.preventDefault();
-      console.log(this);    
+   
+      const card = {
+          number: $("#card_number_form").val(),
+          cvc: $("#cvc_form").val(),
+          exp_month: $("#exp_month_form").val(),
+          exp_year: $("#exp_year_form").val()
+      };
+    　console.log(card);
     }); 
 });
