@@ -2,4 +2,4 @@
   .items-wrapper__title
     #{@category.name}の商品一覧
   .items-wrapper__items
-    = render partial: 'items/item', locals: {item: Item.find(5)}
+    = render @items
