@@ -23,7 +23,7 @@
             =link_to "削除する", "", method: :delete, class: "delete-button"
       - else
         .block__main.horizontal-padding-25
-          = link_to "", data: {turbolinks: false} do
+          = link_to new_card_path, data: {turbolinks: false} do
             .button.regist-card
               = icon "far", "credit-card"
               %span.button__text
