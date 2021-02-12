@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only:[:edit, :update, :destroy, :show, :purchase_confirmation, :purchase]
   before_action :seller?, only:[:edit, :update, :destroy]
-  before_action :sold_item?, only:[:purchase_confirmation, :purchase]
+  before_action :sold_item?, only:[:edit, :update, :destroy, :purchase_confirmation, :purchase]
   before_action :user_is_seller?, only:[:purchase_confirmation, :purchase]
 
   def index
@@ -62,7 +62,7 @@ class ItemsController < ApplicationController
 
   def purchase
   	redirect_to cards_path, alert: "クレジットカードを登録してください" and return unless current_user.card.present?
-  	
+
   	Payjp.api_key = Rails.application.credentials.payjp[:secret_key]
     customer_token = current_user.card.customer_token
 
