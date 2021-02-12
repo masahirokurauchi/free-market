@@ -8,12 +8,12 @@
       .block__menu
         クレジットカード一覧
       -# ログイン中のユーザーがカード登録済みなら
-      -if false
+      -if @card
         .block__main
           .card-show.horizontal-padding-25
             .card-show__data
               = image_tag 'icon_visa.png'
-              = @card[:last4]
+              = "************" + @card[:last4]
               %br
               = @card[:exp_month]
               \/

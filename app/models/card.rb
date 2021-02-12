@@ -8,7 +8,5 @@ class Card < ApplicationRecord
 	    
 	  customer = Payjp::Customer.retrieve(customer_token)
 	  card_data = customer.cards.first
-	    
-	  binding.pry
     end
 end

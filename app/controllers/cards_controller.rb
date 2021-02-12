@@ -2,6 +2,10 @@ class CardsController < ApplicationController
   before_action :authenticate_user!
   before_action :card_is_registered?, except: [:index]
 
+  def index
+    @card = Card.get_card(current_user.card.customer_token) if current_user.card
+  end
+
   def new
     @card = Card.new
   end
