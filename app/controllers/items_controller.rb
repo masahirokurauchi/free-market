@@ -1,7 +1,9 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_item, only:[:edit, :update, :destroy, :show]
+  before_action :set_item, only:[:edit, :update, :destroy, :show, :purchase_confirmation, :purchase]
   before_action :seller?, only:[:edit, :update, :destroy]
+  before_action :sold_item?, only:[:edit, :update, :destroy, :purchase_confirmation, :purchase]
+  before_action :user_is_seller?, only:[:purchase_confirmation, :purchase]
 
   def index
   	return false if Item.count == 0 ## 商品数がゼロのときはランキングが作れないのでここで終了
@@ -54,7 +56,25 @@ class ItemsController < ApplicationController
   end
 
   def purchase_confirmation
+  	@card = Card.get_card(current_user.card.customer_token) if current_user.card
     render layout: 'no_menu'
+  end
+
+  def purchase
+  	redirect_to cards_path, alert: "クレジットカードを登録してください" and return unless current_user.card.present?
+
+  	Payjp.api_key = Rails.application.credentials.payjp[:secret_key]
+    customer_token = current_user.card.customer_token
+
+    Payjp::Charge.create(
+      amount: @item.price, # 商品の値段
+      customer: customer_token, # 顧客、もしくはカードのトークン
+      currency: 'jpy'  # 通貨の種類
+    )
+
+    @item.update(deal: "売り切れ")
+
+    redirect_to item_path(@item), notice: "商品を購入しました"
   end
 
 
@@ -69,5 +89,13 @@ class ItemsController < ApplicationController
 
   def seller?
   	redirect_to root_path, notice: "あなたは出品者ではありません。" unless current_user.id == @item.seller_id
+  end
+
+  def sold_item?
+  	redirect_to root_path, alert: "売り切れです" if @item.deal != "販売中"
+  end
+
+  def user_is_seller?
+  	redirect_to root_path, alert: "自分で出品した商品は購入できません" if @item.seller_id == current_user.id
   end
 end
