@@ -1,9 +1,9 @@
 class CardsController < ApplicationController
   before_action :authenticate_user!
+  before_action :card_is_registered?, except: [:index]
 
   def new
     @card = Card.new
-    ## @exp_yearなどの定義がある場合はそのままにしておく
   end
 
   def create
@@ -18,6 +18,12 @@ class CardsController < ApplicationController
     else
       redirect_to new_card_path, alert: "カードの登録に失敗しました。"
     end
+  end
+
+  private
+
+  def card_is_registered?
+  	redirect_to root_path, notice: "カードは登録済みです。" if current_user.card.present?
   end
 
 end
