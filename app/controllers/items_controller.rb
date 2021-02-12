@@ -58,6 +58,9 @@ class ItemsController < ApplicationController
     render layout: 'no_menu'
   end
 
+  def purchase
+  end
+
 
   private
   def item_params
