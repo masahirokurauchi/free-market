@@ -7,7 +7,7 @@ document.addEventListener('turbolinks:load', function () {
 
   //登録ボタンを押したとき
   regist_button.on("click", function (e) { //登録ボタンを押したとき（ここはsubmitではなくclickにしておく）。
-      e.preventDefault();
+      e.preventDefault(); //デフォルトで発動するフォームの送信を防ぐ
    
       const card = {
           number: $("#card_number_form").val(),
@@ -20,7 +20,15 @@ document.addEventListener('turbolinks:load', function () {
       
         if (status === 200) { //成功した場合
           alert("カードを登録しました");
-          console.log(response.id);
+          // ↓hidden_fieldにcardのtokenを入れることでtokenがparamsに送られる。
+          
+	      $("#card_token").append(
+	        `<input type="hidden" name="payjp_token" value=${response.id}>
+	        <input type="hidden" name="card_token" value=${response.card.id}>`
+	      );
+
+	      // ↓formのsubmitボタンを強制起動する（ページが遷移してコントローラが起動する）。
+          $('#card_form')[0].submit();
         } else { //失敗した場合
           alert("カード情報が正しくありません。");
           console.log(response.error.message);
