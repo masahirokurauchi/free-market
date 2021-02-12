@@ -59,6 +59,14 @@ class ItemsController < ApplicationController
   end
 
   def purchase
+  	Payjp.api_key = Rails.application.credentials.payjp[:secret_key]
+    customer_token = current_user.card.customer_token
+    Payjp::Charge.create(
+      amount: @item.price, # 商品の値段
+      customer: customer_token, # 顧客、もしくはカードのトークン
+      currency: 'jpy'  # 通貨の種類
+    )
+    redirect_to item_path(@item), notice: "商品を購入しました"
   end
 
 
