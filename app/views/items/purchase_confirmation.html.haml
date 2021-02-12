@@ -30,11 +30,11 @@
   .block__menu-left
     配送先
   .block__main
-    〒111-2222
+    〒#{current_user.address&.postal_code}
     %br
-    東京都　渋谷区神南1丁目12−16
+    #{current_user.address&.city} #{current_user.address&.house_number}
     %br
-    フリマ　太郎
+    #{current_user.last_name} #{current_user.first_name}
   .block__menu-right
     = link_to "" do
       変更する >
