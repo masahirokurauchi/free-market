@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only:[:edit, :update, :destroy, :show, :purchase_confirmation, :purchase]
   before_action :seller?, only:[:edit, :update, :destroy]
   before_action :sold_item?, only:[:purchase_confirmation, :purchase]
+  before_action :user_is_seller?, only:[:purchase_confirmation, :purchase]
 
   def index
   	return false if Item.count == 0 ## 商品数がゼロのときはランキングが作れないのでここで終了
@@ -93,6 +94,6 @@ class ItemsController < ApplicationController
   end
 
   def user_is_seller?
-  	redirect_to root_path, alert: "あなたは出品者です" if @item.seller_id == current_user.id
+  	redirect_to root_path, alert: "自分で出品した商品は購入できません" if @item.seller_id == current_user.id
   end
 end
