@@ -1,0 +1,10 @@
+= link_to item_path(item) do
+  .mypage-block-data-list__data
+    .item-data
+      = image_tag item.images.first&.src&.url, class: "item-data__image"
+      .item-data__detail
+        「
+        = item.name
+        」
+        = item.detail
+      = image_tag "icon-arrow.png", class:"item-data__arrow"
