@@ -8,7 +8,7 @@
           .mypage-block-header-user__name
             = current_user.nickname
           .mypage-block-header-user__rate
-            評価：５ 出品数 3
+            評価：５ 出品数：#{current_user.selling_items.length}
       .mypage-block-tabs
         .mypage-block-tabs__tab.active-tab
           取引中
