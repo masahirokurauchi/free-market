@@ -1,9 +1,9 @@
 .mypage-block-tabs
-  = link_to selling_users_path, class: "mypage-block-tabs__tab #{ 'active-tab' if @selling_active == 1 }" do
+  = link_to selling_users_path, class: "mypage-block-tabs__tab #{ 'active-tab' if @selling_active == 1 }", id: "selling" do
     出品中
-  = link_to selling_progress_users_path, class: "mypage-block-tabs__tab #{ 'active-tab' if @selling_active == 2 }" do
+  = link_to selling_progress_users_path, class: "mypage-block-tabs__tab #{ 'active-tab' if @selling_active == 2 }", id: "selling_progress"  do
     取引中
-  = link_to sold_users_path, class: "mypage-block-tabs__tab #{ 'active-tab' if @selling_active == 3 }" do
+  = link_to sold_users_path, class: "mypage-block-tabs__tab #{ 'active-tab' if @selling_active == 3 }", id: "sold"  do
     売却済み
 .mypage-block-data-list
   -if items.length != 0
