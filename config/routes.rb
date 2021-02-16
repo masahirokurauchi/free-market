@@ -14,7 +14,16 @@ Rails.application.routes.draw do
     post 'users/create_address' => 'users/registrations#create_address'
   end
 
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    collection do
+      get "card"
+      get "selling"
+      get "selling_progress"
+      get "sold"
+      get "bought_progress"
+      get "bought_past"
+    end
+  end
 
   resources :items do
     member do
