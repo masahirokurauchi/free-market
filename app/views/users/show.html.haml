@@ -8,6 +8,6 @@
           .mypage-block-header-user__name
             = current_user.nickname
           .mypage-block-header-user__rate
-            評価：５ 出品数：#{current_user.selling_items.length}
-      = render partial: "users/selling_item", locals: {items: @items}
-    = render partial: "users/bought_item", locals: {items: @items}
+            評価：５ 出品数：#{@selling_items.length}
+      = render partial: "users/selling_item", locals: {items: @selling_items}
+    = render partial: "users/bought_item", locals: {items: @bought_items}
