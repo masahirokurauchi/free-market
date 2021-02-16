@@ -1,8 +1,10 @@
 .mypage-block-tabs
-  .mypage-block-tabs__tab.active-tab
+  = link_to root_path, class: "mypage-block-tabs__tab #{ 'active-tab' if true }" do
+    出品中
+  = link_to root_path, class: "mypage-block-tabs__tab #{ 'active-tab' if false }" do
     取引中
-  .mypage-block-tabs__tab
-    過去の取引
+  = link_to root_path, class: "mypage-block-tabs__tab #{ 'active-tab' if false }" do
+    売却済み
 .mypage-block-data-list
   -if items.length != 0
     = render partial: "users/item", collection: items,  as: "item"

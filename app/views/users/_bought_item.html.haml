@@ -2,9 +2,9 @@
   .mypage-block-header
     購入した商品
   .mypage-block-tabs
-    .mypage-block-tabs__tab.active-tab
+    = link_to root_path, class: "mypage-block-tabs__tab #{ 'active-tab' if true }" do
       取引中
-    .mypage-block-tabs__tab
+    = link_to root_path, class: "mypage-block-tabs__tab #{ 'active-tab' if false }" do
       過去の取引
   .mypage-block-data-list
     -if items.length != 0
