@@ -1,4 +1,4 @@
-.mypage-block-tabs
+#selling-tabs.mypage-block-tabs
   = link_to "", class: "mypage-block-tabs__tab #{ 'active-tab' if @selling_active == 1 }", id: "selling" do
     出品中
   = link_to selling_progress_users_path, class: "mypage-block-tabs__tab #{ 'active-tab' if @selling_active == 2 }", id: "selling_progress"  do
