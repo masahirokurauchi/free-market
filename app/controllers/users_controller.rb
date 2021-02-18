@@ -8,8 +8,7 @@ class UsersController < ApplicationController
 	end
 
 	def selling
-		@items = current_user.selling_items
-		@selling_active = 1
+		@items = current_user.selling_items.includes(:images)
 	end
 
 	def selling_progress

@@ -12,6 +12,9 @@ document.addEventListener('turbolinks:load', function () {
         dataType: 'json',
       }).done(function (items) {
         if (items.length == 0) return false //categoryが空、つまり孫が選択された場合、処理を終了させる。
+          items.forEach(function (item) { // カテゴリを一つずつ渡してoptionタグを一つずつ組み立てていく。
+           console.log(item.image)
+          });
 
         // changed_form.nextAll(".select-category").remove(); //選択肢たカテゴリ以降のカテゴリを全て消去。カテゴリの選び直し対策。
 
