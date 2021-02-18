@@ -2,9 +2,22 @@ document.addEventListener('turbolinks:load', function () {
   if (!$('.mypage-block')[0]) return false; //ユーザーマイページではないなら以降実行しない。
   
 
-  $("#selling").on("click", function (e) { //出品中ボタンが押された時
+  $(".mypage-block-tabs__tab").on("click", function (e) {　//　出品中ボタンが押された時
     e.preventDefault(); //デフォルトで発動するリンクの遷移を防ぐ
-    
+
+    let condition = $(this).attr('id') // idを取得する
+
+    if (condition == "selling") { // 出品商品　出品中ボタンなら
+      console.log("selling");
+    } else if (condition == "selling_progress") { // 出品商品　取引中ボタンなら
+      console.log("selling_progress");
+    } else if (condition == "sold") { // 出品商品　売却済みボタンなら
+      console.log("sold")
+    } else if (condition == "bought_progress") { // 購入商品　取引中ボタンなら
+      console.log("bought_progress")
+    } else if (condition == "bought_past") { // 購入商品　過去の取引ボタンなら
+      console.log("bought_past")
+    }
 
     $.ajax({ //AJAXでuser/sellingを動かす
         url: "/users/selling",
@@ -24,6 +37,8 @@ document.addEventListener('turbolinks:load', function () {
       .fail(function () {
         alert('error');
       })
+    
+
   });
   
 });
