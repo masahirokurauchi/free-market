@@ -2,9 +2,8 @@ document.addEventListener('turbolinks:load', function () {
   if (!$('.mypage-block')[0]) return false; //ユーザーマイページではないなら以降実行しない。
   
 
-  $("#selling-tabs").on("click", function (e) { //出品中ボタンが押された時
+  $("#selling").on("click", function (e) { //出品中ボタンが押された時
     e.preventDefault(); //デフォルトで発動するリンクの遷移を防ぐ
-    console.log("selling")
     
 
     $.ajax({ //AJAXでuser/sellingを動かす
