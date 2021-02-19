@@ -105,8 +105,10 @@ document.addEventListener('turbolinks:load', function () {
           //  console.log(item.image)
           // });
 
-        $("#selling-tabs").remove();
-        $("#selling-items-tabs").remove();
+        if (active_id == 1 || active_id == 2 || active_id == 3) { //出品商品なら
+          $("#selling-tabs").remove();
+          $("#selling-items-tabs").remove();
+        }
 
         const html = builditems(items, active_id);// 商品を組み立てる
         $(".mypage-block-header-user").after(html);// 組み立てたフォームを表示
