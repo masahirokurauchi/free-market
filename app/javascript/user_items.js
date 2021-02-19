@@ -7,20 +7,33 @@ document.addEventListener('turbolinks:load', function () {
 
     let condition = $(this).attr('id') // idを取得する
 
+    let ajax_url = "";
+
     if (condition == "selling") { // 出品商品　出品中ボタンなら
+      ajax_url = "/users/selling"
       console.log("selling");
+
     } else if (condition == "selling_progress") { // 出品商品　取引中ボタンなら
+      ajax_url = "/users/selling_progress"
+    
       console.log("selling_progress");
+
     } else if (condition == "sold") { // 出品商品　売却済みボタンなら
+      ajax_url = "/users/sold"
       console.log("sold")
+
     } else if (condition == "bought_progress") { // 購入商品　取引中ボタンなら
+      ajax_url = "/users/bought_progress"
       console.log("bought_progress")
+
     } else if (condition == "bought_past") { // 購入商品　過去の取引ボタンなら
+      ajax_url = "/users/bought_past"
       console.log("bought_past")
+
     }
 
     $.ajax({ //AJAXでuser/sellingを動かす
-        url: "/users/selling",
+        url: ajax_url,
         type: "GET",
         dataType: 'json',
       }).done(function (items) {
