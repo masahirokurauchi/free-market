@@ -4,7 +4,7 @@ document.addEventListener('turbolinks:load', function () {
   function builditems(items, active_id) { // 商品の一覧を組み立てる
     let options = "";
 
-    if (active_id == 1 || active_id == 2 || active_id == 3) {
+    if (active_id == 1 || active_id == 2 || active_id == 3) { //出品商品の場合
       if (items.length == 0) {
         options = `
                     <div class ="mypage-block-data-list__data-none">
@@ -20,29 +20,33 @@ document.addEventListener('turbolinks:load', function () {
                       <a href="/items/${item.id}">
                         <div class ="mypage-block-data-list__data">
                           <div class ="item-data">
-                            <img src =${item.image&.src&.url} alt ="image" class ="item-data__image">                        .item-data__detail
+                            <img src =${item.image} alt ="image" class ="item-data__image">
+                            <div class="item-data__detail">
                               「
                               ${item.name}
                               」
                               ${item.detail}
-                            <img src ="icon-arrow.png" class ="item-data__arrow">
+                            </div>
+                            <img src ="/assets/icon-arrow-ffd4a8f478b85be67159e2805ddce1ab337dfabcae57d013392b873f3f06495f.png" class ="item-data__arrow">
                           </div>
                         </div>
                       </a>
                      `;
         });
       } 
+    } else { //購入商品の場合
+
     }
 
     const html = `
                   <div id ="selling-tabs" class ="mypage-block-tabs">
-                    <a id="selling" class="mypage-block-tabs__tab ${ 'active-tab' if active_id == 1 }">
+                    <a id="selling" class="mypage-block-tabs__tab active-tab">
                       出品中
                     </a>
-                    <a id="selling_progress" class="mypage-block-tabs__tab ${ 'active-tab' if active_id == 2 }">
+                    <a id="selling_progress" class="mypage-block-tabs__tab">
                       取引中
                     </a>
-                    <a id="sold" class="mypage-block-tabs__tab ${ 'active-tab' if active_id == 3 }">
+                    <a id="sold" class="mypage-block-tabs__tab">
                       売却済み
                     </a>
                   </div>
@@ -102,7 +106,7 @@ document.addEventListener('turbolinks:load', function () {
           });
 
         const html = builditems(items, active_id);// 商品を組み立てる
-        $(".select-category:last").after(html);// 組み立てたフォームを表示
+        $(".mypage-block").append(html);// 組み立てたフォームを表示
 
         // changed_form.nextAll(".select-category").remove(); //選択肢たカテゴリ以降のカテゴリを全て消去。カテゴリの選び直し対策。
 
