@@ -5,7 +5,7 @@
     取引中
   = link_to "", class: "mypage-block-tabs__tab #{ 'active-tab' if @selling_active == 3 }", id: "sold"  do
     売却済み
-.mypage-block-data-list
+#selling-items-tabs.mypage-block-data-list
   -if items.length != 0
     = render partial: "users/item", collection: items,  as: "item"
   -else

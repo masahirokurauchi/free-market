@@ -50,7 +50,7 @@ document.addEventListener('turbolinks:load', function () {
                       売却済み
                     </a>
                   </div>
-                  <div class ="mypage-block-data-list">
+                  <div id="selling-items-tabs" class ="mypage-block-data-list">
                     ${options}
                   </div>
                  `;
@@ -101,12 +101,15 @@ document.addEventListener('turbolinks:load', function () {
       }).done(function (items) {
         // if (items.length == 0) return false //itemsが空の場合、処理を終了させる。
 
-          items.forEach(function (item) { // カテゴリを一つずつ渡してoptionタグを一つずつ組み立てていく。
-           console.log(item.image)
-          });
+          // items.forEach(function (item) { // カテゴリを一つずつ渡してoptionタグを一つずつ組み立てていく。
+          //  console.log(item.image)
+          // });
+
+        $("#selling-tabs").remove();
+        $("#selling-items-tabs").remove();
 
         const html = builditems(items, active_id);// 商品を組み立てる
-        $(".mypage-block").append(html);// 組み立てたフォームを表示
+        $(".mypage-block-header-user").after(html);// 組み立てたフォームを表示
 
         // changed_form.nextAll(".select-category").remove(); //選択肢たカテゴリ以降のカテゴリを全て消去。カテゴリの選び直し対策。
 
