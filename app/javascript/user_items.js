@@ -185,7 +185,33 @@ document.addEventListener('turbolinks:load', function () {
 
   });
 
+  $(document).on("click", ".mypage-side-bar-lists__list", function (e) {//　サイドバーリストが押された時
 
-  
+    let cld = $(this).children('div'); //子要素を取得
+
+    let condition = cld.text(); // 見たい商品を取得する
+
+    if (~condition.indexOf('出品した商品---出品中')) {
+      $("#selling").click();
+
+    } else if (~condition.indexOf('出品した商品---取引中')) {
+      $("#selling_progress").click();
+
+    } else if (~condition.indexOf('出品した商品---売却済み')) {
+      $("#sold").click();
+
+    } else if (~condition.indexOf('購入した商品---取引中')) {
+      $("#bought_progress").click();
+
+    } else if (~condition.indexOf('購入した商品---過去の取引')) {
+      $("#bought_past").click();
+
+    }
+
+
+  });
+
+
+
   
 });
