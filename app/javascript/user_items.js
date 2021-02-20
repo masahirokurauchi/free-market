@@ -112,19 +112,19 @@ document.addEventListener('turbolinks:load', function () {
       }).done(function (items) {
 
         if (active_id == 1 || active_id == 2 || active_id == 3) { //出品商品の場合
-          $("#selling-tabs").remove();
-          $("#selling-items-tabs").remove();
+          $("#selling-tabs").remove(); //タブの消去
+          $("#selling-items-tabs").remove(); //商品の消去
+
+          const html = builditems(items, active_id);// 商品を組み立てる
+          $(".mypage-block-header-user").after(html);// 組み立てたフォームを表示
+
         } else { //購入商品の場合
-          $("#bought-tabs").remove();
+          $("#bought-tabs").remove(); //タブと商品の消去
+
+          // const html = builditems(items, active_id);// 商品を組み立てる
         }
 
-        const html = builditems(items, active_id);// 商品を組み立てる
-        $(".mypage-block-header-user").after(html);// 組み立てたフォームを表示
-
-        // changed_form.nextAll(".select-category").remove(); //選択肢たカテゴリ以降のカテゴリを全て消去。カテゴリの選び直し対策。
-
-        // const html = buildCategoryForm(categories);// カテゴリのフォームを組み立てる
-        // $(".select-category:last").after(html);// 組み立てたフォームを表示
+        
       })
       .fail(function () {
         alert('error');
