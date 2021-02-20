@@ -19,8 +19,10 @@ class UsersController < ApplicationController
 	end
 
 	def bought_progress
+		@items = Item.where(buyer_id: current_user.id, deal: 0).includes(:images)
 	end
 
 	def bought_past
+		@items = Item.where(buyer_id: current_user.id, deal: 1).includes(:images)
 	end
 end
