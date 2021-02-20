@@ -38,9 +38,7 @@ document.addEventListener('turbolinks:load', function () {
 
     }
 
-    let selling_active = ""
-    let selling_progress_active = ""
-    let sold_active = ""
+    let selling_active, selling_progress_active, sold_active = "";
 
     if (active_id == 1) {
       selling_active = "active-tab"
@@ -112,19 +110,12 @@ document.addEventListener('turbolinks:load', function () {
         type: "GET",
         dataType: 'json',
       }).done(function (items) {
-        // console.log(items);
-        // console.log(items.length);
-        // if (items.length == 0) return false //itemsが空の場合、処理を終了させる。
-
-          // items.forEach(function (item) { // カテゴリを一つずつ渡してoptionタグを一つずつ組み立てていく。
-          //  console.log(item.image)
-          // });
-
-        // アクティブを変更する
 
         if (active_id == 1 || active_id == 2 || active_id == 3) { //出品商品の場合
           $("#selling-tabs").remove();
           $("#selling-items-tabs").remove();
+        } else { //購入商品の場合
+          $("#bought-tabs").remove();
         }
 
         const html = builditems(items, active_id);// 商品を組み立てる
