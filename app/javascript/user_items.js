@@ -176,6 +176,7 @@ document.addEventListener('turbolinks:load', function () {
           $("#bought-tabs").remove(); //タブと商品の消去
 
           const html = builditems(items, active_id);// 商品を組み立てる
+          $(".mypage-block").after(html);// 組み立てたフォームを表示
         }
 
         
