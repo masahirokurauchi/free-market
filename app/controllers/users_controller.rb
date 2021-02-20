@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
 	def show
-		@items = current_user.selling_items
-		@bought_items = current_user.bought_items
+		@items = Item.where(seller_id: current_user.id, deal: 0).includes(:images)
+		@bought_items = Item.where(buyer_id: current_user.id, deal: 0).includes(:images)
 		@bought_active = 1
 	end
 
