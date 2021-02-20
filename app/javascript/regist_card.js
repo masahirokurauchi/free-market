@@ -20,12 +20,18 @@ document.addEventListener('turbolinks:load', function () {
       
         if (status === 200) { //成功した場合
           alert("カードを登録しました");
-          
+
           // ↓hidden_fieldにcardのtokenを入れることでtokenがparamsに送られる。
 	      $("#card_token").append(
 	        `<input type="hidden" name="payjp_token" value=${response.id}>
 	        <input type="hidden" name="card_token" value=${response.card.id}>`
 	      );
+
+          // フォームからカード情報を削除。paramsに個人情報を入れないようにするため。
+	      $("#card_number_form").removeAttr("name");
+          $("#cvc_form").removeAttr("name");
+          $("#exp_month_form").removeAttr("name");
+          $("#exp_year_form").removeAttr("name");
 
 	      // ↓formのsubmitボタンを強制起動する（ページが遷移してコントローラが起動する）。
           $('#card_form')[0].submit();

@@ -1,0 +1,14 @@
+#selling-tabs.mypage-block-tabs
+  = link_to "", class: "mypage-block-tabs__tab active-tab", id: "selling" do
+    出品中
+  = link_to "", class: "mypage-block-tabs__tab", id: "selling_progress"  do
+    取引中
+  = link_to "", class: "mypage-block-tabs__tab", id: "sold"  do
+    売却済み
+#selling-items-tabs.mypage-block-data-list
+  -if items.length != 0
+    = render partial: "users/item", collection: items,  as: "item"
+  -else
+    .mypage-block-data-list__data-none
+      .text
+        出品中の商品がありません。
