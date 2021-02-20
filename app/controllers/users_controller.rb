@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 	def show
 		@items = current_user.selling_items
 		@bought_items = current_user.bought_items
-		@selling_active = 1
 		@bought_active = 1
 	end
 
