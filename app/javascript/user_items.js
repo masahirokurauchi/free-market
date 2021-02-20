@@ -38,15 +38,27 @@ document.addEventListener('turbolinks:load', function () {
 
     }
 
+    let selling_active = ""
+    let selling_progress_active = ""
+    let sold_active = ""
+
+    if (active_id == 1) {
+      selling_active = "active-tab"
+    } else if (active_id == 2) {
+      selling_progress_active = "active-tab"
+    } else if (active_id == 3) {
+      sold_active = "active-tab"
+    }
+
     const html = `
                   <div id ="selling-tabs" class ="mypage-block-tabs">
-                    <a id="selling" class="mypage-block-tabs__tab active-tab">
+                    <a id="selling" class="mypage-block-tabs__tab ${selling_active}">
                       出品中
                     </a>
-                    <a id="selling_progress" class="mypage-block-tabs__tab">
+                    <a id="selling_progress" class="mypage-block-tabs__tab ${selling_progress_active}">
                       取引中
                     </a>
-                    <a id="sold" class="mypage-block-tabs__tab">
+                    <a id="sold" class="mypage-block-tabs__tab ${sold_active}">
                       売却済み
                     </a>
                   </div>
@@ -100,13 +112,14 @@ document.addEventListener('turbolinks:load', function () {
         type: "GET",
         dataType: 'json',
       }).done(function (items) {
+        // console.log(items);
+        // console.log(items.length);
         // if (items.length == 0) return false //itemsが空の場合、処理を終了させる。
 
           // items.forEach(function (item) { // カテゴリを一つずつ渡してoptionタグを一つずつ組み立てていく。
           //  console.log(item.image)
           // });
 
-        // 続けてできるようにする
         // アクティブを変更する
 
         if (active_id == 1 || active_id == 2 || active_id == 3) { //出品商品の場合
