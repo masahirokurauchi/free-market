@@ -72,7 +72,7 @@ class ItemsController < ApplicationController
       currency: 'jpy'  # 通貨の種類
     )
 
-    @item.update(deal: "売り切れ")
+    @item.update(deal: "売り切れ", buyer_id: current_user.id)
 
     redirect_to item_path(@item), notice: "商品を購入しました"
   end
