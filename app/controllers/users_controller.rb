@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 	def show
 		@items = Item.where(seller_id: current_user.id, deal: 0).includes(:images)
 		@bought_items = Item.where(buyer_id: current_user.id, deal: 0).includes(:images)
-		@bought_active = 1
 	end
 
 	def selling

@@ -135,28 +135,25 @@ document.addEventListener('turbolinks:load', function () {
     if (condition == "selling") { // 出品商品　出品中ボタンなら
       ajax_url = "/users/selling";
       active_id = 1;
-      console.log("selling");
 
     } else if (condition == "selling_progress") { // 出品商品　取引中ボタンなら
       ajax_url = "/users/selling_progress"
       active_id = 2;
-      console.log("selling_progress");
 
     } else if (condition == "sold") { // 出品商品　売却済みボタンなら
       ajax_url = "/users/sold"
       active_id = 3;
-      console.log("sold")
 
     } else if (condition == "bought_progress") { // 購入商品　取引中ボタンなら
       ajax_url = "/users/bought_progress"
       active_id = 4;
-      console.log("bought_progress")
 
     } else if (condition == "bought_past") { // 購入商品　過去の取引ボタンなら
       ajax_url = "/users/bought_past"
       active_id = 5;
-      console.log("bought_past")
 
+    } else {
+      return false
     }
 
     $.ajax({ //AJAXでuser/sellingを動かす
@@ -187,5 +184,8 @@ document.addEventListener('turbolinks:load', function () {
     
 
   });
+
+
+  
   
 });
