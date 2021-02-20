@@ -58,7 +58,8 @@ document.addEventListener('turbolinks:load', function () {
   }
   
 
-  $(".mypage-block-tabs__tab").on("click", function (e) {　//　出品中ボタンが押された時
+  // $(".mypage-block-tabs__tab").on("click", function (e) {　//　出品中ボタンが押された時
+  $(document).on("click", ".mypage-block-tabs__tab", function (e) {//　出品中ボタンが押された時
     e.preventDefault(); //デフォルトで発動するリンクの遷移を防ぐ
 
     let condition = $(this).attr('id') // idを取得する
@@ -105,7 +106,10 @@ document.addEventListener('turbolinks:load', function () {
           //  console.log(item.image)
           // });
 
-        if (active_id == 1 || active_id == 2 || active_id == 3) { //出品商品なら
+        // 続けてできるようにする
+        // アクティブを変更する
+
+        if (active_id == 1 || active_id == 2 || active_id == 3) { //出品商品の場合
           $("#selling-tabs").remove();
           $("#selling-items-tabs").remove();
         }
