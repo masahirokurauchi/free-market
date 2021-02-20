@@ -8,22 +8,20 @@ class UsersController < ApplicationController
 	end
 
 	def selling
-		@items = current_user.selling_items.includes(:images)
+		@items = Item.where(seller_id: current_user.id, deal: 0).includes(:images)
 	end
 
 	def selling_progress
-		@selling_active = 2
+		@items = Item.where(seller_id: current_user.id, deal: 0).includes(:images)
 	end
 
 	def sold
-		@selling_active = 3
+		@items = Item.where(seller_id: current_user.id, deal: 1).includes(:images)
 	end
 
 	def bought_progress
-		@bought_active = 1
 	end
 
 	def bought_past
-		@bought_active = 2
 	end
 end
