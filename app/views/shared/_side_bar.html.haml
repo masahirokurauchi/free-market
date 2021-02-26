@@ -1,7 +1,7 @@
 .mypage-side-bar
   .mypage-side-bar-lists
     -# ユーザー管理機能実装時、マイページへのリンクを貼る
-    = render partial: 'shared/side_bar_list', locals: {text: "マイページ", path: "#", method: ""}
+    = render partial: 'shared/side_bar_list', locals: {text: "マイページ", path: user_path(current_user.id), method: ""}
     = render partial: 'shared/side_bar_list', locals: {text: "お知らせ", path: "", method: ""}
     = render partial: 'shared/side_bar_list', locals: {text: "いいね！一覧", path: "", method: ""}
     = render partial: 'shared/side_bar_list', locals: {text: "出品する", path: new_item_path, method: ""}
