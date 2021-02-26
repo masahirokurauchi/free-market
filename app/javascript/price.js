@@ -22,10 +22,13 @@ document.addEventListener('turbolinks:load', function () {
   $("#item_price").on("keyup", function () { //価格が入力された時
 
     let price = $(this).val();
+    let fee = price / 10;
 
-    if ($.isNumeric(price)) { //　数字なら
-        console.log(price);
-    } else {
+    if ($.isNumeric(price) && (price >= 300) ) { //　数字かつ３００円以上なら
+        console.log(fee);
+    } else if ($.isNumeric(price)) { // 数字かつ３００円以下なら
+    } else { // 数字でないなら
+
     }
 
     
