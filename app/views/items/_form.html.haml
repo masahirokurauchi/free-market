@@ -115,7 +115,7 @@
               必須
           .input-field-main-price__right
             = f.text_field :price, required: true, placeholder: "価格"
-            .error-field{data:{column_name: "price"}}
+            #price-error.error-field{data:{column_name: "price"}}
         %hr
         .input-field-main-price
           .input-field-main-price__left
