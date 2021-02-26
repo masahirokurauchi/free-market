@@ -19,30 +19,17 @@ document.addEventListener('turbolinks:load', function () {
   }
 
 
-  $("#item_price").on("keyup", function () { //カテゴリが選択された時
+  $("#item_price").on("keyup", function () { //価格が入力された時
 
-    console.log("sdfasdfa");
+    let price = $(this).val();
 
-    const category_id = $(this).val();
-    var changed_form = $(this); //thisを保持
+    if ($.isNumeric(price)) { //　数字なら
+        console.log(price);
+    } else {
+    }
 
-    $.ajax({ //category_idをAJAXで送信
-        url: "/api/categories",
-        type: "GET",
-        data: {
-          category_id: category_id
-        },
-        dataType: 'json',
-      }).done(function (categories) {
-        if (categories.length == 0) return false //categoryが空、つまり孫が選択された場合、処理を終了させる。
+    
 
-        changed_form.nextAll(".select-category").remove(); //選択肢たカテゴリ以降のカテゴリを全て消去。カテゴリの選び直し対策。
-
-        const html = buildCategoryForm(categories);// カテゴリのフォームを組み立てる
-        $(".select-category:last").after(html);// 組み立てたフォームを表示
-      })
-      .fail(function () {
-        alert('error');
-      })
+    
   });
 });
