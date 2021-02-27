@@ -48,6 +48,11 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano3-unicorn'
+
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'gimei'  ## ※fakerの日本語版のようなgem
 end
 
 group :test do
