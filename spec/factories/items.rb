@@ -14,6 +14,11 @@ FactoryBot.define do
     ## もしくは
     ## seller {FactoryBot.create(:user)}
 
+    # after(:build) do |item|
+    #   item.images << build_list(:image, 3)
+    #   puts "画像の枚数：#{item.images.length}"
+    # end
+
     trait :with_images do
       transient do
         image_length { 1 }  ## 引数のイメージ（evaluator.image_lengthで使える）
