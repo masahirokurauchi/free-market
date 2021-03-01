@@ -16,6 +16,12 @@ RSpec.describe Card, type: :model do
       ## ダミーの支払い情報
       let(:dummy_charge) { DummyData::PayjpCharge.data }
 
+      ## ダミーのクレジットカード
+      let(:dummy_card) { DummyData::PayjpCard.data }
+
+      ## Payjp::Customer.retrieveの返り値の代用品（モック）
+      let(:payjp_customer_mock) { double("Payjp::Customer") }
+
       before do
         Payjp.api_key = Rails.application.credentials.payjp[:secret_key]
       end
@@ -99,6 +105,24 @@ RSpec.describe Card, type: :model do
 
         expect(charge[:customer]).to eq(dummy_charge[:customer])
       end  ## /it "Payjp::Charge.create(amount: hoge, customer: fuga, currency: jpy) ※返り値である「charge」のcustomerが「dummy_charge」のcustomerと一致する"
+
+      it "self.get_cardメソッドの返り値である「card」が「dummy_card」と一致する" do
+        ## Payjp::Customerに対してretrieveメソッドが実行された時、実行せずにpayjp_customer_mockを返す。
+        allow(Payjp::Customer).to receive(:retrieve).and_return(payjp_customer_mock)
+
+        ## payjp_customer_mockに対してcardsメソッドが実行された時、実行せずにdummy_payjp_cardsを返す。
+        dummy_payjp_cards = [ dummy_card ]
+        allow(payjp_customer_mock).to receive(:cards).and_return(dummy_payjp_cards)
+
+        card = Card.get_card(card_token.customer_token)
+
+        puts "ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー"
+        puts "Card.get_cardのcard: #{card[:id]}"
+        puts "dummy_card: #{dummy_card[:id]}"
+        puts "ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー"
+
+        expect(card[:id]).to eq(dummy_card[:id])
+      end  ## /it "self.get_cardメソッドの返り値である「card」が「dummy_card」と一致する"
 
     end  ## /context "正しいカード情報が送られている"
 
