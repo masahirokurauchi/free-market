@@ -14,10 +14,12 @@ FactoryBot.define do
     ## もしくは
     ## seller {FactoryBot.create(:user)}
 
-    # after(:build) do |item|
-    #   item.images << build_list(:image, 3)
-    #   puts "画像の枚数：#{item.images.length}"
-    # end
+    trait :with_three_images do  ## 商品画像が3枚なら
+      after(:build) do |item|
+        item.images << build_list(:image, 3)
+        puts "画像の枚数：#{item.images.length}"
+      end
+    end
 
     trait :with_images do
       transient do
