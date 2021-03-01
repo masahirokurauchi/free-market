@@ -10,6 +10,16 @@ RSpec.describe Card, type: :model do
       ## card_token = cardモデルのオブジェクト
       let(:card_token) { FactoryBot.create(:card_token, user: user ) }
 
+      ## ダミーの顧客情報
+      let(:dummy_customer) { DummyData::PayjpCustomer.data }
+
+      ## ダミーの支払い情報
+      let(:dummy_charge) { DummyData::PayjpCharge.data }
+
+      before do
+        Payjp.api_key = Rails.application.credentials.payjp[:secret_key]
+      end
+
       it "card_tokenオブジェクト本来の挙動" do
         puts "ーーーーーーーーーーーーーーーー"
         puts "カスタマーのトークン"
@@ -43,6 +53,52 @@ RSpec.describe Card, type: :model do
         puts card_token.customer_token.hello
         puts "ーーーーーーーーーーーーーーーー"
       end  ## /it "モックとallowの挙動確認" 
+
+      it "Payjp::Customer.retrieve(customer_token) ※返り値である「customer」のidが「dummy_customer」のidと一致する" do
+        ## Payjp::Customerに対してretrieveメソッドが実行された時、実行せずにpayjp_customer_mockを返す。
+        allow(Payjp::Customer).to receive(:retrieve).and_return(dummy_customer)
+
+        customer = Payjp::Customer.retrieve("cus_XXXXXXXXXX")
+
+        puts "ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー"
+        puts "Payjp::Customer.retrieveのcustomer: #{customer[:id]}"
+        puts "dummy_customer: #{dummy_customer[:id]}"
+        puts "ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー"
+
+        expect(customer[:id]).to eq(dummy_customer[:id])
+      end  ## /it "Payjp::Customer.retrieve(customer_token) ※返り値である「customer」のidが「dummy_customer」のidと一致する"
+
+      it "Payjp::Customer.create(card: params[:payjp_token]) ※返り値である「customer」のidが「dummy_customer」のidと一致する" do
+        ## Payjp::Customerに対してcreateメソッドが実行された時、実行せずにdummy_customerを返す。
+        allow(Payjp::Customer).to receive(:create).and_return(dummy_customer)
+
+        customer = Payjp::Customer.create(card: "tok_XXXXXXXXXXXXX")
+
+        puts "ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー"
+        puts "Payjp::Customer.createのcustomer: #{customer[:id]}"
+        puts "dummy_customer: #{dummy_customer[:id]}"
+        puts "ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー"
+
+        expect(customer[:id]).to eq(dummy_customer[:id])
+      end  ## /it "Payjp::Customer.create(card: params[:payjp_token]) ※返り値である「customer」のidが「dummy_customer」のidと一致する"
+
+      it "Payjp::Charge.create(amount: hoge, customer: fuga, currency: jpy) ※返り値である「charge」のcustomerが「dummy_charge」のcustomerと一致する" do
+        ## Payjp::Customerに対してcreateメソッドが実行された時、実行せずにdummy_customerを返す。
+        allow(Payjp::Charge).to receive(:create).and_return(dummy_charge)
+
+        charge = Payjp::Charge.create(
+          amount: 1000, # 商品の値段
+          customer: "cus_XXXXXXXXXXXX", # 顧客、もしくはカードのトークン
+          currency: 'jpy'  # 通貨の種類
+        )
+
+        puts "ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー"
+        puts "Payjp::Charge.createのchargeのcustomer: #{charge[:customer]}"
+        puts "dummy_chargeのcustomer: #{dummy_charge[:customer]}"
+        puts "ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー"
+
+        expect(charge[:customer]).to eq(dummy_charge[:customer])
+      end  ## /it "Payjp::Charge.create(amount: hoge, customer: fuga, currency: jpy) ※返り値である「charge」のcustomerが「dummy_charge」のcustomerと一致する"
 
     end  ## /context "正しいカード情報が送られている"
 
