@@ -38,6 +38,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'gimei'  ## ※fakerの日本語版のようなgem
+  gem 'rails-controller-testing'
 end
 
 group :development do
