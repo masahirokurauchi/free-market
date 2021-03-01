@@ -22,6 +22,15 @@ class CardsController < ApplicationController
     else
       redirect_to new_card_path, alert: "カードの登録に失敗しました。"
     end
+
+    # ## テスト用  　　card を　@card　に変更
+    # @card = current_user.build_card(card_token: params[:card_token], customer_token: customer.id)
+
+    # if @card.save
+    #   redirect_to cards_path, notice: "カードの登録が完了しました。"
+    # else
+    #   redirect_to new_card_path, alert: "カードの登録に失敗しました。"
+    # end
   end
 
   def destroy
