@@ -5,6 +5,8 @@ RSpec.describe "Users", type: :system do
   #   driven_by(:rack_test)  ## ブラウザを起動しない形式のテストにする
   # end
 
+  let(:dummy_google_user) { OmniAuth.config.mock_auth[:google_oauth2] }
+
   context 'SNS認証' do
     it 'Google認証をすると、新規登録画面で既に情報が入力済みになっている' do
       # トップページに移動する
@@ -18,7 +20,16 @@ RSpec.describe "Users", type: :system do
       expect(page).to have_content('Googleで登録する')
       # Google認証へのリンクをクリックする
       find('.button', text:"Googleで登録する").click
-      binding.pry
+
+      # 新規登録画面のニックネーム欄に、Googleから受け取ったユーザー情報（ニックネーム）が入力済みになっている
+      expect(
+        find('#user_nickname').value
+      ).to eq dummy_google_user[:info][:name]
+      # 新規登録画面のニックネーム欄に、Googleから受け取ったユーザー情報（email）が入力済みになっている
+      expect(
+        find('#user_email').value
+      ).to eq dummy_google_user[:info][:email]
+
     end  ## /it 'Google認証をすると、新規登録画面で既に情報が入力済みになっている'
   end  ## /context 'SNS認証' do
 
