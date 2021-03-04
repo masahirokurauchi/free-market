@@ -2,17 +2,6 @@
 
 "free-market" is a ec site system with ruby.
  
- 
-# Features
- 
-Physics_Sim_Py used [pyxel](https://github.com/kitao/pyxel) only.
- 
-```python
-import pyxel
-```
-[Pyxel](https://github.com/kitao/pyxel) is a retro game engine for Python.
-You can feel free to enjoy making pixel art style physics simulations.
- 
 # Requirement
  
 * ruby ruby 2.6.5p114 (2019-10-01 revision 67812) [x86_64-darwin19]
